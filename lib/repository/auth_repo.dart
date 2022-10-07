@@ -72,8 +72,8 @@ class AuthRepo {
       error = ErrorModel(
         error: e.message,
         data: null,
-      );}
-     catch (e) {
+      );
+    } catch (e) {
       error = ErrorModel(
         error: e.toString(),
         data: null,
@@ -116,5 +116,10 @@ class AuthRepo {
       );
     }
     return error;
+  }
+
+  void signOut() async {
+    await _googleSignIn.signOut();
+    _localStorageRepo.setToken('');
   }
 }

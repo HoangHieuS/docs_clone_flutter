@@ -1,24 +1,20 @@
 import 'package:docs_clone_flutter/repository/repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
 
 import '../colors.dart';
-import 'screens.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
   void signInWithGoogle(WidgetRef ref, BuildContext context) async {
     final sMess = ScaffoldMessenger.of(context);
-    final navigator = Navigator.of(context);
+    final navigator = Routemaster.of(context);
     final errorModel = await ref.watch(authRepoProvider).signInWithGoogle();
     if (errorModel.error == null) {
       ref.read(userProvider.notifier).update((state) => errorModel.data);
-      navigator.push(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
+      navigator.push('/');
     } else {
       sMess.showSnackBar(
         SnackBar(
